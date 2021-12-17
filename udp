@@ -1,0 +1,25 @@
+package uDp;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.util.Scanner;
+public class UDPClient {
+
+	public static void main(String[] args) throws Exception {
+	DatagramSocket ds=new DatagramSocket();
+	System.out.println("please enter a number ");
+	Scanner scan=new Scanner(System.in);
+	int a=scan.nextInt();
+	byte[] b=(a+"").getBytes();
+	InetAddress ia = InetAddress.getLocalHost();
+	DatagramPacket dp=new DatagramPacket(b,b.length,ia,2111);
+	ds.send(dp);
+	byte[] b1=new byte[1024];
+	DatagramPacket dp1=new DatagramPacket(b1,b1.length);
+	ds.receive(dp1);
+	String str=new  String(dp1.getData(),0,dp1.getLength());
+	System.out.println("result is "+ str);
+	ds.close();
+	}
+
+}
